@@ -64,7 +64,7 @@
             $banco->rodaquery('SELECT * FROM funcionario');
             $data = $banco->retornaDados();
             
-            $this->assertArrayHasKey('nome', $data);
+            $this->assertCount(1, $data);
         }
     }
     
