@@ -31,8 +31,6 @@
         {
             $linhas = mysql_num_rows($this->query);
             
-            $this->disconnect();
-            
             return $linhas;
         }
         
@@ -48,9 +46,7 @@
                 }
             }
             
-            $this->disconnect();
-            
-			return $retorno; 
+            return $retorno; 
         }
         
         public function salvar($id, $data = array())
@@ -61,8 +57,6 @@
                 $retorno = mysql_query('INSERT INTO funcionario (nome, profissao) VALUES("'.$this->limpaString($data['nome']).'", "'.$this->limpaString($data['profissao']).'")') or die(mysql_error());
             }
             
-            $this->disconnect();
-            
             if($retorno){
                 return true;
             }
@@ -72,9 +66,7 @@
         
         public function apagar($id)
         {
-            $retorno = mysql_query('DELETE FROM funcionario WHERE id ="'.$this->limpaString($id).'"');
-            
-            $this->disconnect();
+            $retorno = mysql_query('DELETE FROM funcionario WHERE id ="'.$id.'"');
             
             if($retorno){
                 return true;
@@ -85,6 +77,7 @@
         
         public function disconnect()
         {
+            mysql_close($this->conexao);
             $this->conexao = null;
         }
         

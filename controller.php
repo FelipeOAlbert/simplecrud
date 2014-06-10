@@ -49,6 +49,23 @@
             return $this->retorno;
         }
         
+        public final function delete()
+        {
+            if(intval($_POST['id']) > 0){                
+                if($this->apagar($_POST['id'])){
+                    $this->retorno['mensagem'] = "Registro apagado com sucesso";
+                }else{
+                    $this->retorno['falha']     = true;
+                    $this->retorno['mensagem']  = "Erro ao apagar registro";
+                }
+            }else{
+                $this->retorno['falha']     = true;
+                $this->retorno['mensagem']  = "ID não encontrado";
+            }
+            
+            echo json_encode($this->retorno);
+        }
+        
         public final function valida_post()
         {
             if(empty($this->post['nome'])){
@@ -64,4 +81,8 @@
     }
     
     $controller = new controller();
+    
+    if($_POST and isset($_POST['metodo']) and $_POST['metodo'] == 'delete'){
+        $controller->delete($_POST['id']);
+    }
 ?>

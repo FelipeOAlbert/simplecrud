@@ -1,11 +1,40 @@
 <!DOCTYPE HTML>
-<?php require_once('controller.php'); ?>
+<? require_once('controller.php'); ?>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Simple Crud</title>
-        </head>
+        
+        <script type="text/javascript" src="jquery.js"></script>
+        
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.apagar').click(function(){
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "controller.php",
+                        data: 'id='+$(this).attr('href')+'&metodo=delete',
+                        success: function(retorno){
+                            
+                            if(retorno.falha == 'true'){
+                                alert(retorno.mensagem);
+                            }else{
+                                alert(retorno.mensagem);
+                                window.location.reload(true);
+                            }
+                        },
+                        
+                        dataType: 'json'
+                    });
+                    
+                    return false; 
+                });
+            });
+        </script>
+        
+    </head>
  
     <body>
         
@@ -41,7 +70,7 @@
                         <td>
                             <a href="/editar.php?id=<?=$row['id'];?>">Editar</a>
                             <br />
-                            <a href="/apagar.php?id=<?=$row['id'];?>">Apagar</a>
+                            <a class="apagar" href="<?=$row['id'];?>">Apagar</a>
                         </td>
                     </tr>
                 <?
