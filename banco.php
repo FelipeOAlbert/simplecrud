@@ -41,9 +41,9 @@
             $retorno    = Array();
             
             if($linha){
-                $retorno = mysql_fetch_array($this->query);
+                $retorno = mysql_fetch_assoc($this->query);
             }else{
-                while($dados = mysql_fetch_array($this->query)) {
+                while($dados = mysql_fetch_assoc($this->query)) {
                     $retorno[] = $dados;
                 }
             }
@@ -56,7 +56,7 @@
         public function salvar($id, $data = array())
         {
             if(intval($id) > 0){
-                $retorno = mysql_query('UPDATE funcionario SET nome="'.$this->limpaString($data['nome']).'", profissao="'.$this->limpaString($data['profissao']).'" WHERE id = "'.$this->limpaString($id).'"') or die(mysql_error());
+                $retorno = mysql_query('UPDATE funcionario SET nome="'.$this->limpaString($data['nome']).'", profissao="'.$this->limpaString($data['profissao']).'" WHERE id = "'.$id.'"') or die(mysql_error());
             }else{
                 $retorno = mysql_query('INSERT INTO funcionario (nome, profissao) VALUES("'.$this->limpaString($data['nome']).'", "'.$this->limpaString($data['profissao']).'")') or die(mysql_error());
             }

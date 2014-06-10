@@ -39,9 +39,9 @@
                         <td><?=$row['nome'];?></td>
                         <td><?=$row['profissao'];?></td>
                         <td>
-                            <a href="/editar.php?<?=$row['id'];?>">Editar</a>
+                            <a href="/editar.php?id=<?=$row['id'];?>">Editar</a>
                             <br />
-                            <a href="/apagar.php?<?=$row['id'];?>">Apagar</a>
+                            <a href="/apagar.php?id=<?=$row['id'];?>">Apagar</a>
                         </td>
                     </tr>
                 <?

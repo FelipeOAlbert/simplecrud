@@ -32,7 +32,7 @@
         {
             $banco = new banco();
             $banco->rodaquery('SELECT * FROM funcionario WHERE id ="1"');
-            $data = $banco->retornaLinha(true);
+            $data = $banco->retornaDados(true);
             
             $this->assertArrayHasKey('nome', $data, 'Consulta retornou vazio');
             

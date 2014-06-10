@@ -4,15 +4,13 @@
     class controller extends banco{
         
         private $post;
-        private $mensagem;
+        private $retorno;
         
         function __construct()
         {
             parent::__construct();
             
-            $this->mensagem['mensagem'] = null;
-            $this->mensagem['falha']    = false;
-            
+            $this->retorno  = array('mensagem' => null, 'falha' => false);
         }
         
         public final function index()
@@ -21,35 +19,46 @@
             return $this->retornaDados();
         }
         
-        public final function salvar_post()
+        public final function salvar_post($id)
         {
             $this->post = $_POST;
             
             $this->valida_post();
             
-            if(!$this->mensagem['falha']){
-                
-                
-                if($this->salvar(false, $this->post)){
-                    $this->mensagem['mensagem'][''] = "Dados salvos com sucesso";
+            if(!$this->retorno['falha']){
+                if($this->salvar($id, $this->post)){
+                    $this->retorno['mensagem'][] = "Dados salvos com sucesso";
                 }else{
-                    $this->mensagem['mensagem'][''] = "Erro ao salvar dados";
+                    $this->retorno['mensagem'][] = "Erro ao salvar dados";
                 }
             }
             
-            return $this->mensagem;
+            return $this->retorno;
+        }
+        
+        public final function getDados($id)
+        {
+            if(intval($id) > 0){                
+                $this->rodaquery('SELECT * FROM funcionario WHERE id ="'.$id.'"');
+                $this->retorno['data'] = $this->retornaDados(true);
+            }else{
+                $this->retorno['falha']        = true;
+                $this->retorno['mensagem'][] = "ID não encontrado";
+            }
+            
+            return $this->retorno;
         }
         
         public final function valida_post()
         {
             if(empty($this->post['nome'])){
-                $this->mensagem['falha']        = true;
-                $this->mensagem['mensagem'][''] = "Campo nome obrigatório";
+                $this->retorno['falha']        = true;
+                $this->retorno['mensagem'][] = "Campo nome obrigatório";
             }
             
             if(empty($this->post['profissao'])){
-                $this->mensagem['falha']        = true;
-                $this->mensagem['mensagem'][''] = "Campo profissão obrigatório";
+                $this->retorno['falha']        = true;
+                $this->retorno['mensagem'][] = "Campo profissão obrigatório";
             }
         }
     }
