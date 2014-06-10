@@ -55,6 +55,17 @@
             
             $this->assertEquals(0, $qtd, "falha ao apagar");
         }
+        
+        public function testlistar()
+        {
+            $this->testadicionar();
+            
+            $banco = new banco();
+            $banco->rodaquery('SELECT * FROM funcionario');
+            $data = $banco->retornaDados();
+            
+            $this->assertArrayHasKey('nome', $data);
+        }
     }
     
 ?>
