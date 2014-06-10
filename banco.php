@@ -36,13 +36,21 @@
             return $linhas;
         }
         
-        public function retornaDados()
+        public function retornaDados($linha = false)
         {
-            $linha = mysql_fetch_array($this->query);
+            $retorno    = Array();
+            
+            if($linha){
+                $retorno = mysql_fetch_array($this->query);
+            }else{
+                while($dados = mysql_fetch_array($this->query)) {
+                    $retorno[] = $dados;
+                }
+            }
             
             $this->disconnect();
             
-            return $linha;
+			return $retorno; 
         }
         
         public function salvar($id, $data = array())
