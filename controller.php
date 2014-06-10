@@ -9,6 +9,10 @@
         function __construct()
         {
             parent::__construct();
+            
+            $this->mensagem['mensagem'] = null;
+            $this->mensagem['falha']    = false;
+            
         }
         
         public final function index()
@@ -23,13 +27,13 @@
             
             $this->valida_post();
             
-            if(!$this->mensagem){
+            if(!$this->mensagem['falha']){
                 
                 
                 if($this->salvar(false, $this->post)){
-                    $this->mensagem[] = "Dados salvos com sucesso";
+                    $this->mensagem['mensagem'][''] = "Dados salvos com sucesso";
                 }else{
-                    $this->mensagem[] = "Erro ao salvar dados";
+                    $this->mensagem['mensagem'][''] = "Erro ao salvar dados";
                 }
             }
             
@@ -39,11 +43,13 @@
         public final function valida_post()
         {
             if(empty($this->post['nome'])){
-                $this->mensagem[] = "Campo nome obrigatório";
+                $this->mensagem['falha']        = true;
+                $this->mensagem['mensagem'][''] = "Campo nome obrigatório";
             }
             
             if(empty($this->post['profissao'])){
-                $this->mensagem[] = "Campo profissão obrigatório";
+                $this->mensagem['falha']        = true;
+                $this->mensagem['mensagem'][''] = "Campo profissão obrigatório";
             }
         }
     }
