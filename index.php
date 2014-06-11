@@ -40,7 +40,7 @@
         
         <h2>Simple crud</h2>
         
-        <a href="/adicionar.php">Adicionar</a>
+        <a href="adicionar.php">Adicionar</a>
         
         <br />
         
@@ -68,7 +68,7 @@
                         <td><?=$row['nome'];?></td>
                         <td><?=$row['profissao'];?></td>
                         <td>
-                            <a href="/editar.php?id=<?=$row['id'];?>">Editar</a>
+                            <a href="editar.php?id=<?=$row['id'];?>">Editar</a>
                             <br />
                             <a class="apagar" href="<?=$row['id'];?>">Apagar</a>
                         </td>
