@@ -57,8 +57,7 @@ class Banco
     */
     public function conecta()
     {
-        $this->_conexao = mysql_connect($this->_host, $this->_user, $this->_pass)
-                                        or die(mysql_error());
+        $this->_conexao = mysql_connect($this->_host, $this->_user, $this->_pass) or die(mysql_error());
         $status = mysql_select_db($this->_db, $this->_conexao) or die(mysql_error());
     
         return $status;
