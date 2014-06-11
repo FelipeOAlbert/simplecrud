@@ -9,7 +9,7 @@
  
     <body>
         <h2>Adicionar dados</h2>
-        <a href="/index.php">Voltar</a>
+        <a href="index.php">Voltar</a>
         <? include('_form.php');?>
     </body>
 </html>
