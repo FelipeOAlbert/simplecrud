@@ -8,8 +8,6 @@
         
         function __construct()
         {
-            parent::__construct();
-            
             $this->retorno  = array('mensagem' => null, 'falha' => false);
         }
         

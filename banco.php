@@ -11,7 +11,7 @@
         
         public function __construct()
         {
-            $this->conecta();
+            return $this->conecta();
         }
         
         public function conecta()
@@ -53,11 +53,11 @@
         {
             if(intval($id) > 0){
                 $retorno = mysql_query('UPDATE funcionario SET nome="'.$this->limpaString($data['nome']).'", profissao="'.$this->limpaString($data['profissao']).'" WHERE id = "'.$id.'"') or die(mysql_error());
-            }else{
+            }elseif(is_string($id) == FALSE){
                 $retorno = mysql_query('INSERT INTO funcionario (nome, profissao) VALUES("'.$this->limpaString($data['nome']).'", "'.$this->limpaString($data['profissao']).'")') or die(mysql_error());
             }
             
-            if($retorno){
+            if(isset($retorno) and $retorno == true){
                 return true;
             }
             
@@ -68,22 +68,19 @@
         {
             $retorno = mysql_query('DELETE FROM funcionario WHERE id ="'.$id.'"');
             
-            if($retorno){
-                return true;
-            }
-            
-            return false;
-        }
-        
-        public function disconnect()
-        {
-            mysql_close($this->conexao);
-            $this->conexao = null;
+            return true;
         }
         
         function limpaString($value)
         { 
             return mysql_real_escape_string($value); 
+        }
+        
+        public function limpaBanco()
+        {
+            $this->rodaquery('TRUNCATE TABLE funcionario;');
+            
+            return true;
         }
     }
     
