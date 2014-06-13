@@ -9,7 +9,7 @@
          */
         public function testconecta()
         {
-            $banco = new banco();
+            $banco = new Banco();
             
             $this->assertTrue($banco->conecta());
         }
@@ -22,7 +22,7 @@
          */
         public function testadicionar()
         {
-            $banco = new banco();
+            $banco = new Banco();
             
             $this->assertTrue($banco->salvar(false, array('nome' => 'Felipe', 'profissao' => 'Programador')), 'Erro ao inserir');
             
@@ -40,7 +40,7 @@
          */
         public function testadicionarFalse()
         {
-            $banco = new banco();
+            $banco = new Banco();
             
             $this->assertFalse($banco->salvar('teste', array('nome' => 'Felipe', 'profissao' => 'Programador')), 'Erro na falha ao inserir');
             
@@ -58,7 +58,7 @@
          */
         public function testeditar()
         {
-            $banco = new banco();
+            $banco = new Banco();
             $banco->rodaquery('SELECT * FROM funcionario WHERE id ="1"');
             $data = $banco->retornaDados(true);
             
@@ -75,7 +75,7 @@
          */
         public function testeditarFalse()
         {
-            $banco = new banco();
+            $banco = new Banco();
             $banco->rodaquery('SELECT * FROM funcionario WHERE id ="1"');
             $data = $banco->retornaDados(true);
             
@@ -89,7 +89,7 @@
          */
         public function testapagar()
         {
-            $banco = new banco();
+            $banco = new Banco();
             
             $this->assertTrue($banco->apagar(1), 'Falha ao apagar');
         }
@@ -100,7 +100,7 @@
          */
         public function testlistar()
         {
-            $banco = new banco();
+            $banco = new Banco();
             $banco->rodaquery('SELECT * FROM funcionario');
             $data = $banco->retornaDados(false);
             
@@ -113,7 +113,7 @@
          */
         public function testlimpaBanco()
         {
-            $banco = new banco();
+            $banco = new Banco();
             $this->assertTrue($banco->limpaBanco());
         }
     }
