@@ -1,88 +1,170 @@
 <?php
-    class banco {
-        
-        private $host       = 'localhost';
-        private $db         = 'crud';
-        private $user       = 'root';
-        private $pass       = '123qwe';
-        
-        private $conexao    = null;
-        private $query      = null;
-        
-        public function __construct()
-        {
-            return $this->conecta();
-        }
-        
-        public function conecta()
-        {
-            $this->conexao = mysql_connect($this->host, $this->user, $this->pass) or die(mysql_error());
-            $status = mysql_select_db($this->db, $this->conexao) or die(mysql_error());
-            
-            return $status;
-        }
-        
-        public function rodaquery($query)
-        {
-            $this->query = mysql_query($query) or die(mysql_error());
-        }
-        
-        public function contaLinhas()
-        {
-            $linhas = mysql_num_rows($this->query);
-            
-            return $linhas;
-        }
-        
-        public function retornaDados($linha = false)
-        {
-            $retorno    = Array();
-            
-            if($linha){
-                $retorno = mysql_fetch_assoc($this->query);
-            }else{
-                while($dados = mysql_fetch_assoc($this->query)) {
-                    $retorno[] = $dados;
-                }
-            }
-            
-            return $retorno; 
-        }
-        
-        public function salvar($id, $data = array())
-        {
-            if(intval($id) > 0){
-                $retorno = mysql_query('UPDATE funcionario SET nome="'.$this->limpaString($data['nome']).'", profissao="'.$this->limpaString($data['profissao']).'" WHERE id = "'.$id.'"') or die(mysql_error());
-            }elseif(is_string($id) == FALSE){
-                $retorno = mysql_query('INSERT INTO funcionario (nome, profissao) VALUES("'.$this->limpaString($data['nome']).'", "'.$this->limpaString($data['profissao']).'")') or die(mysql_error());
-            }
-            
-            if(isset($retorno) and $retorno == true){
-                return true;
-            }
-            
-            return false;
-        }
-        
-        public function apagar($id)
-        {
-            $retorno = mysql_query('DELETE FROM funcionario WHERE id ="'.$id.'"');
-            
-            return true;
-        }
-        
-        function limpaString($value)
-        { 
-            return mysql_real_escape_string($value); 
-        }
-        
-        public function limpaBanco()
-        {
-            $this->rodaquery('TRUNCATE TABLE funcionario;');
-            
-            return true;
-        }
+/**
+* Classe de conexão ao banco
+*
+* PHP version 5
+*
+* @category     PHP
+* @package      Banco
+* @author       Albert <albert@questa.com.br>
+* @copyright    1997-2005 The PHP Group
+* @license      http://www.php.net/license/3_01.txt  PHP License 3.01
+* @version      SVN: 1.0.1
+* @since        File available since Release 1.0.1
+* @deprecated   File deprecated in Release 2.0.0
+*/
+
+namespace banco;
+
+
+class Banco
+{
+    
+    private $host       = 'localhost';
+    private $db         = 'crud';
+    private $user       = 'root';
+    private $pass       = '123qwe';
+    private $conexao    = null;
+    private $query      = null;
+    
+    /**
+    * Class constructor
+    *
+    * @return void
+    */
+    public function __construct()
+    {
+        return $this->conecta();
     }
     
-    $banco = new banco();
-?>
+    /**
+    * Method constructor
+    * 
+    * @access public
+    * @return string
+    */
+    public function conecta()
+    {
+        $this->conexao = mysql_connect($this->host, $this->user, $this->pass) or die(mysql_error());
+        $status = mysql_select_db($this->db, $this->conexao) or die(mysql_error());
+        
+        return $status;
+    }
+    
+    /**
+    * Method rodaquery
+    * 
+    * @param string $query é requerida
+    * 
+    * @access public
+    * @return void
+    */
+    public function rodaquery($query)
+    {
+        $this->query = mysql_query($query) or die(mysql_error());
+    }
+    
+    /**
+    * Method contaLinhas
+    * 
+    * @access public
+    * @return string
+    */
+    public function contaLinhas()
+    {
+        $linhas = mysql_num_rows($this->query);
+        
+        return $linhas;
+    }
+    
+    /**
+    * Method retornaDados
+    *
+    * @param bool $linha é requerida
+    * 
+    * @access public
+    * @return array
+    */
+    public function retornaDados($linha = false)
+    {
+        $retorno    = array();
+        
+        if ($linha) {
+            $retorno = mysql_fetch_assoc($this->query);
+        } else {
+            while ($dados = mysql_fetch_assoc($this->query)) {
+                $retorno[] = $dados;
+            }
+        }
+        
+        return $retorno;
+    }
+    
+    /**
+    * Method salvar
+    *
+    * @param numeric $id   variavel requerida
+    * @param array   $data variavel requerida
+    * 
+    * @access public
+    * @return bool
+    */
+    public function salvar($id, $data = array())
+    {
+        if (intval($id) > 0) {
+            $retorno = mysql_query('UPDATE funcionario SET nome="'.$this->limpaString($data['nome']).'", profissao="'.$this->limpaString($data['profissao']).'" WHERE id = "'.$id.'"') or die(mysql_error());
+        } elseif (is_string($id) == false) {
+            $retorno = mysql_query('INSERT INTO funcionario (nome, profissao) VALUES("'.$this->limpaString($data['nome']).'", "'.$this->limpaString($data['profissao']).'")') or die(mysql_error());
+        }
+        
+        if (isset($retorno) and $retorno == true) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    
+    /**
+    * Method apagar
+    *
+    * @param numeric $id variavel requerida
+    * 
+    * @access public
+    * @return bool
+    */
+    public function apagar($id)
+    {
+        $retorno = mysql_query('DELETE FROM funcionario WHERE id ="'.$id.'"');
+        
+        return true;
+    }
+    
+    /**
+    * Method limpaString
+    *
+    * @param string $value variavel requerida
+    * 
+    * @access public
+    * @return string
+    */
+    public function limpaString($value)
+    {
+        return mysql_real_escape_string($value);
+    }
+    
+    /**
+    * Method limpaBanco
+    *
+    * @access public
+    * @return bool
+    */
+    public function limpaBanco()
+    {
+        $this->rodaquery('TRUNCATE TABLE funcionario;');
+        
+        return true;
+    }
+}
+
+$banco = new Banco();

@@ -1,7 +1,7 @@
 <?
     require_once('banco.php');
 
-    class controller extends banco{
+    class controller extends Banco{
         
         private $post;
         private $retorno;
